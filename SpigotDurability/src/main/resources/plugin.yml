@@ -1,0 +1,9 @@
+name: CustomDurability
+version: 1.0.0
+author: Himmelt
+main: org.soraworld.durability.CustomDurability
+depend: [Violet]
+description: CustomDurability Plugin.
+permissions:
+  customdurability.admin:
+    default: op

@@ -1,0 +1,56 @@
+apply plugin: 'java'
+
+group = 'org.soraworld'
+version = '1.0.0'
+archivesBaseName = "CustomDurability"
+
+sourceCompatibility = targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    shade
+    compile.extendsFrom(shade)
+}
+
+dependencies {
+    compile 'org.soraworld:hocon:1.0.9'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+}
+
+subprojects {
+    apply plugin: 'java'
+
+    group rootProject.group
+    version rootProject.version
+
+    sourceCompatibility = targetCompatibility = 1.8
+
+    tasks.withType(JavaCompile) {
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        jcenter()
+    }
+
+    configurations {
+        shade
+        compile.extendsFrom(shade)
+    }
+
+    dependencies {
+        shade rootProject
+    }
+
+    jar {
+        configurations.shade.copyRecursive().setTransitive(false).each {
+            artifact -> from(zipTree(artifact))
+        }
+    }
+}

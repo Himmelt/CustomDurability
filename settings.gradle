@@ -1,0 +1,4 @@
+rootProject.name = 'CustomDurability'
+
+include 'SpigotDurability'
+include 'SpongeDurability'
