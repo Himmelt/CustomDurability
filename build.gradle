@@ -1,13 +1,13 @@
 apply plugin: 'java'
 
 group = 'org.soraworld'
-version = '1.0.0'
+version = '1.0.1'
 archivesBaseName = "CustomDurability"
 
 sourceCompatibility = targetCompatibility = 1.8
 
 repositories {
-    jcenter()
+    //jcenter()
 }
 
 configurations {

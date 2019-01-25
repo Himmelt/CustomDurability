@@ -1,6 +1,8 @@
 package org.soraworld.durability.manager;
 
 import net.minecraft.server.v1_7_R4.Item;
+import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.ItemStack;
 import org.soraworld.durability.serializer.PatternSerializer;
 import org.soraworld.hocon.node.Setting;
 import org.soraworld.violet.manager.SpigotManager;
@@ -51,16 +53,7 @@ public class DurabilityManager extends SpigotManager {
             Item.REGISTRY.forEach(o -> {
                 if (o instanceof Item) {
                     String name = Item.REGISTRY.c(o);
-                    int maxDamage = ((Item) o).getMaxDurability();
-                    System.out.println(name);
-                    String[] ss = name.split(":");
-                    if (ss.length == 1) {
-                        TreeMap<String, Integer> map = damages.computeIfAbsent("minecraft", k -> new TreeMap<>());
-                        map.put(ss[0], maxDamage);
-                    } else if (ss.length == 2) {
-                        TreeMap<String, Integer> map = damages.computeIfAbsent(ss[0], k -> new TreeMap<>());
-                        map.put(ss[1], maxDamage);
-                    }
+                    if (name != null) putMax(((Item) o).getMaxDurability(), name.split(":"));
                 }
             });
         } else setItemMaxDamage();
@@ -77,6 +70,28 @@ public class DurabilityManager extends SpigotManager {
                     }
                 }
             }));
+        }
+    }
+
+    public void setMaxDamage(ItemStack stack, int maxDamage) {
+        if (SET_MAX_DAMAGE != null) {
+            Item item = CraftItemStack.asNMSCopy(stack).getItem();
+            try {
+                SET_MAX_DAMAGE.invoke(item, maxDamage);
+                String name = Item.REGISTRY.c(item);
+                if (name != null) putMax(maxDamage, name.split(":"));
+            } catch (Throwable ignored) {
+            }
+        }
+    }
+
+    private void putMax(int maxDamage, String[] ss) {
+        if (ss.length == 1) {
+            TreeMap<String, Integer> map = damages.computeIfAbsent("minecraft", k -> new TreeMap<>());
+            map.put(ss[0], maxDamage);
+        } else if (ss.length == 2) {
+            TreeMap<String, Integer> map = damages.computeIfAbsent(ss[0], k -> new TreeMap<>());
+            map.put(ss[1], maxDamage);
         }
     }
 

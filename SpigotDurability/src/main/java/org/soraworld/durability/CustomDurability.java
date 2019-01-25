@@ -1,6 +1,7 @@
 package org.soraworld.durability;
 
 import org.bukkit.event.Listener;
+import org.soraworld.durability.command.CommandDurability;
 import org.soraworld.durability.manager.DurabilityManager;
 import org.soraworld.violet.command.SpigotBaseSubs;
 import org.soraworld.violet.command.SpigotCommand;
@@ -21,9 +22,9 @@ public class CustomDurability extends SpigotPlugin {
     }
 
     protected void registerCommands() {
-        SpigotCommand command = new SpigotCommand(getId(), manager.defAdminPerm(), false, manager);
+        SpigotCommand command = new SpigotCommand(getId(), manager.defAdminPerm(), false, manager, "durability", "damage");
         command.extractSub(SpigotBaseSubs.class);
-        //command.extractSub(CommandDurability.class);
+        command.extractSub(CommandDurability.class);
         register(this, command);
     }
 }
