@@ -1,0 +1,14 @@
+[
+  {
+    "modid": "customdurability",
+    "name": "CustomDurability",
+    "description": "CustomDurability Mod , Copyright (c) 2018-2020 Himmelt.",
+    "version": "${version}",
+    "mcversion": "[${mcversion}]",
+    "authorList": [
+      "Himmelt"
+    ],
+    "logoFile": "",
+    "credits": "Himmelt, making this mod."
+  }
+]
