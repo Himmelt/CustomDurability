@@ -2,8 +2,9 @@ package org.soraworld.durability;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLLoadCompleteEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import org.soraworld.durability.proxy.CommonProxy;
 
 /**
  * @author Himmelt
@@ -19,13 +20,13 @@ public final class CustomDurability {
 
     @SidedProxy(
             clientSide = "org.soraworld.durability.client.ClientProxy",
-            serverSide = "org.soraworld.durability.CommonProxy"
+            serverSide = "org.soraworld.durability.proxy.CommonProxy"
     )
     private static CommonProxy proxy;
 
     @Mod.EventHandler
-    public void onInit(FMLInitializationEvent event) {
-        proxy.onInit(event);
+    public void onInit(FMLPreInitializationEvent event) {
+        proxy.onPreInit(event);
     }
 
     @Mod.EventHandler
